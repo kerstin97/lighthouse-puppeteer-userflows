@@ -10,6 +10,7 @@
   "author": "Kerstin Reichinger",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
     "lighthouse": "^10.1.0",
     "puppeteer": "^19.8.3"

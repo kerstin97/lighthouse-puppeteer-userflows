@@ -2,6 +2,8 @@ import { writeFileSync } from "fs";
 import puppeteer from "puppeteer";
 import { startFlow } from "lighthouse";
 import config from "lighthouse/core/config/desktop-config.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const escapeXpathString = (str) => {
   const splitedQuotes = str.replace(/'/g, `', "'", '`);
@@ -58,7 +60,11 @@ const clickByText = async (page, text) => {
   // Wait for results and click on first event, navigate to event detail
   const eventDetailLink = ".event-card-link";
   await page.waitForSelector(eventDetailLink);
-  await page.click(eventDetailLink);
+
+  await flow.navigate(async () => {
+    await page.click(eventDetailLink);
+  });
+
   await page.waitForNavigation({ waitUntil: "load" });
   console.log("Current page is event detail:", page.url());
 

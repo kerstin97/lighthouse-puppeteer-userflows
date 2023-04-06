@@ -1,4 +1,6 @@
 import puppeteer from "puppeteer";
+import dotenv from "dotenv";
+dotenv.config();
 
 const escapeXpathString = (str) => {
   const splitedQuotes = str.replace(/'/g, `', "'", '`);
@@ -39,11 +41,7 @@ const clickByText = async (page, text) => {
   // Wait for View all events link and navigate to All events
   const showAllEvents = "a";
   await page.waitForSelector(showAllEvents);
-
-  await flow.navigate(async () => {
-    await page.click(showAllEvents);
-  });
-
+  await page.click(showAllEvents);
   await page.waitForNavigation({ waitUntil: "load" });
   console.log("Current page should be events feed:", page.url());
 
@@ -67,7 +65,7 @@ const clickByText = async (page, text) => {
 
   // fill form and send
   await page.type("#username-input", "kersoleynsta");
-  await page.type("#password-input", process.env.PASSWORD);
+  await page.type("#password-input", process.env.PASSWORD.toString());
 
   await Promise.all([
     page.$eval("form", (form) => form.submit()),
@@ -85,6 +83,7 @@ const clickByText = async (page, text) => {
   console.log("Current page:", page.url());
 
   // Create Event
+
   await page.waitForSelector("input[name=title]");
   await page.type("input[name=title]", "pupeteer test");
   await page.waitForSelector("textarea[name=info]");
