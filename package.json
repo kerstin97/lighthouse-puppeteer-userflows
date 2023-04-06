@@ -1,0 +1,17 @@
+{
+  "name": "lighthouse",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Lighthouse Performance Tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kerstin Reichinger",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "lighthouse": "^10.1.0",
+    "puppeteer": "^19.8.3"
+  }
+}
