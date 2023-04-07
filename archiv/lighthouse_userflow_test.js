@@ -1,7 +1,7 @@
 import { writeFileSync } from "fs";
 import puppeteer from "puppeteer";
 import { startFlow } from "lighthouse";
-import config from "lighthouse/core/config/desktop-config.js";
+//import config from "lighthouse/core/config/desktop-config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -38,10 +38,17 @@ const clickByText = async (page, text) => {
   });
   const page = await browser.newPage();
 
-  const flow = await startFlow(page, {
+  const config = {
+    extends: "lighthouse:default",
+    plugins: ["lighthouse-plugin-soft-navigation"],
+  };
+
+  /*const flow = await startFlow(page, {
     config,
     name: "test",
-  });
+  });*/
+
+  const flow = await startFlow(page, { config });
 
   // Homepage
   await flow.navigate("http://193.170.119.146");
@@ -50,7 +57,9 @@ const clickByText = async (page, text) => {
   const showAllEvents = "a";
   await page.waitForSelector(showAllEvents);
 
+  await flow.startNavigation();
   await page.click(showAllEvents);
+  await flow.endNavigation();
   await page.waitForNavigation({ waitUntil: "load" });
 
   console.log("Current page should be events feed:", page.url());
@@ -61,11 +70,11 @@ const clickByText = async (page, text) => {
   const eventDetailLink = ".event-card-link";
   await page.waitForSelector(eventDetailLink);
 
-  await flow.navigate(async () => {
-    await page.click(eventDetailLink);
-  });
-
+  await flow.startTimespan();
+  await page.click(eventDetailLink);
   await page.waitForNavigation({ waitUntil: "load" });
+  await flow.endTimespan();
+
   console.log("Current page is event detail:", page.url());
 
   // Event Detail
@@ -78,7 +87,7 @@ const clickByText = async (page, text) => {
   // Login
 
   // fill form and send
-  await flow.startTimespan();
+  //await flow.startTimespan();
   await page.type("#username-input", "kersoleynsta");
   await page.type("#password-input", process.env.PASSWORD);
 
@@ -86,7 +95,7 @@ const clickByText = async (page, text) => {
     page.$eval("form", (form) => form.submit()),
     page.waitForNavigation(),
   ]);
-  await flow.endTimespan();
+  //await flow.endTimespan();
 
   // successfully logged in
 
