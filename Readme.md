@@ -1,7 +1,7 @@
 # Performance Tests of my bachelor thesis projects with Puppeteer and Lighthouse
 
-There are two scripts, one for the Next.js app and one for the Remix app. Each script runs the performance test 5 times and create the re repots as html,json and csv.
-After my bachelor degree, the server will not be available anymore and tests won't work afterwards.
+There are two scripts, one for the Next.js app and one for the Remix app. Each script runs the performance test 5 times and create the repots as html,json and csv.
+Attention: After my bachelor degree, the servers will not be available anymore, so tests won't work afterwards.
 
 Following steps are in the user-flow:
 
