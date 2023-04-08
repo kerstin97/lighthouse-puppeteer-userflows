@@ -1,7 +1,6 @@
 import { writeFileSync } from "fs";
 import puppeteer from "puppeteer";
 import { startFlow } from "lighthouse";
-//import config from "lighthouse/core/config/desktop-config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -42,11 +41,6 @@ const clickByText = async (page, text) => {
     extends: "lighthouse:default",
     plugins: ["lighthouse-plugin-soft-navigation"],
   };
-
-  /*const flow = await startFlow(page, {
-    config,
-    name: "test",
-  });*/
 
   const flow = await startFlow(page, { config });
 
